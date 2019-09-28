@@ -225,6 +225,7 @@ class ApplicationController extends Controller
     public function actionImageUpload()
     {
         $model = new Application();
+
         $type_image = Yii::$app->getRequest()->get('type');
 
         if($type_image == 'PUB_F'){
