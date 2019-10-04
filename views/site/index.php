@@ -4,16 +4,17 @@
 
 $this->title = 'My Yii Application';
 
-?>
+use yii\helpers\Html; ?>
 <div class="site-index">
-    Сулейман Демирель
+    Добро пожаловть
 </div>
+
 
 <?php if(Yii::$app->user->can('accountant')): ?>
     <h3>Hello accountant</h3>
 
 <?php elseif (Yii::$app->user->can('admin')): ?>
-    <h3>Hello admin</h3>
+    <h3>Добро пожаловать Олимжан Баймуратов</h3>
 
 <?php elseif(Yii::$app->user->can('stuff')): ?>
     <h3>Hello stuff</h3>

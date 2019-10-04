@@ -75,8 +75,6 @@ class ApplicationController extends Controller
 
 
 
-
-
         $model = new Application();
         $authorModel = new Author();
 

@@ -29,7 +29,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
+        'brandLabel' => Html::img('http://sdu.edu.kz/media/filer_public/03/fd/03fd7d60-694d-4e38-bfc9-ec6e776b6361/logo.png' , ['width' => 30 , 'height' => 30]),
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -41,11 +41,9 @@ AppAsset::register($this);
             'options' => ['class' => 'navbar-nav navbar-right'],
             'items' => [
                 ['label' => 'Главная', 'url' => ['/site/index']],
-                ['label' => 'О нас', 'url' => ['/site/about']],
-                ['label' => 'Контакты', 'url' => ['/site/contact']],
-                ['label' => 'Регистрация', 'url' => ['/site/signup']],
-
-                ['label' => 'Посты' , 'url' => ['post/index']],
+                ['label' => 'Посмотреть приложение', 'url' => ['/application/']],
+                ['label' => 'Создать приложение', 'url' => ['/application/create']],
+                ['label' => 'Посмотреть всех ролей и пользователей', 'url' => ['/rbac']],
                 Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
                 ) : (

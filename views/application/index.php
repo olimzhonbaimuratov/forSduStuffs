@@ -15,9 +15,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?php if(Yii::$app->user->can('stuff') || Yii::$app->user->can('admin')): ?>
+        <?php if (Yii::$app->user->can('stuff') || Yii::$app->user->can('admin')): ?>
             <?= Html::a('Создать приложения', ['create'], ['class' => 'btn btn-success']) ?>
-        <?php endif;?>
+        <?php endif; ?>
 
     </p>
 
@@ -31,21 +31,37 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
 
             [
-                    'label' => 'ФИО',
-                    'format' => 'raw',
-                    'value' => function($model){
-                        return Html::tag('a' , $model->name . '(' .$model->rank. ')');
-                    }
+                'label' => 'ФИО',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return Html::tag('a', $model->name . '(' . $model->rank . ')');
+                }
 
             ],
             [
-                    'label' => 'Контаткты',
-                    'format' => 'raw',
-                    'value' => function($model){
-                        return Html::tag('a' ,"Почта: " . $model->email . '<br>' . "Тел: " . $model->phone_number );}
-                        ],
+                'label' => 'Контаткты',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return Html::tag('a', "Почта: " . $model->email . '<br>' . "Тел: " . $model->phone_number);
+                }
+            ],
 
-            'rank',
+            [
+                'label' => 'Наименование публикации',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return $model->application_edition;
+                }
+            ],
+//            [
+//                'label' => 'Должность',
+//                'format' => 'raw',
+//                'value' => function ($model) {
+//                    return $model->applicaion->responsibility;
+//                }
+//
+//            ],
+
 
             //'link_for_application',
             //'type_of_application',
@@ -61,8 +77,8 @@ $this->params['breadcrumbs'][] = $this->title;
             //'updated_at',
 
             [
-                    'class' => 'yii\grid\ActionColumn',
-                    'template'=> '{view} {delete} {update}',
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view} {delete} {update}',
             ],
         ],
     ]); ?>
