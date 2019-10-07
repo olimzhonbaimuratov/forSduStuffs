@@ -111,8 +111,7 @@ class Application extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'type' => '',
-            'authors' => '',
-//            'google_scholar_Url' => 'Google Scholar URL',
+            'authors' => 'hello',
         ];
     }
 
