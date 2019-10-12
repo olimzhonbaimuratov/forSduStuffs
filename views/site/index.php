@@ -6,7 +6,9 @@ $this->title = 'My Yii Application';
 
 use yii\helpers\Html; ?>
 <div class="site-index">
-    Добро пожаловть
+    <div class="alert alert-danger">
+        <h4>Добро пожаловать для оформления заявление вам необходимо авторизоваться </h4>
+    </div>
 </div>
 
 

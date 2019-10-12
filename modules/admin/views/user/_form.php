@@ -11,30 +11,30 @@ use yii\helpers\ArrayHelper;
 
 <div class="user-form">
 
-    <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
-        <?= $form->field($model, 'username') ?>
-        <?= $form->field($model, 'first_name') ?>
-        <?= $form->field($model, 'last_name') ?>
-        <?= $form->field($model, 'patronymic') ?>
-        <?= $form->field($model, 'email') ?>
-        <?= $form->field($model, 'rank')->label('Департамент') ?>
-        <?= $form->field($model, 'responsibility')->label('Должность') ?>
-
-        <?= $form->field($model, 'password')->passwordInput() ?>
-        <?= $form->field($model, 'retypePassword')->passwordInput() ?>
-
-        <select name="user_role" id="">
-           <?php foreach ($roles as $role) : ?>
-               <option value="<?=$role->name ?>"><?= $role->name?></option>
-           <?php endforeach; ?>
-        </select>
-
-
-
-    <div class="form-group">
-        <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
+    <div class="card">
+        <div class="card-body">
+            <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
+            <div class="row">
+                <div class="col-sm-6">
+                    <?= $form->field($model, 'username')->label("ID-номер") ?>
+                    <?= $form->field($model, 'first_name')->label('Имя') ?>
+                    <?= $form->field($model, 'last_name')->label('Фамилия') ?>
+                    <?= $form->field($model, 'patronymic')->label('Отчество') ?>
+                    <?= $form->field($model, 'rank')->label('Департамент') ?>
+                </div>
+                <div class="col-sm-6">
+                    <?= $form->field($model, 'responsibility')->label('Должность') ?>
+                    <?= $form->field($model, 'password')->passwordInput()->label('Пароль') ?>
+                    <?= $form->field($model, 'retypePassword')->passwordInput()->label('Повторите пароль') ?>
+                    <?= $form->field($model, 'roles')->dropDownList(\app\models\User::getDropDownList())->label('Выберите роль'); ?>
+                </div>
+            </div>
+            <div class="form-group">
+                <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
+            </div>
+            <?php ActiveForm::end(); ?>
+        </div>
     </div>
-    <?php ActiveForm::end(); ?>
 
 
 </div>

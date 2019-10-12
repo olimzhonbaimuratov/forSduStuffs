@@ -41,7 +41,6 @@ class UserController extends Controller
     {
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -81,12 +80,11 @@ class UserController extends Controller
         if ($model->load(Yii::$app->request->post())) {
 
             if ($user = $model->signup()) {
-                $userId = ($this->getId($model->email)['id']);
-                $authassignment->item_name = Yii::$app->request->post('user_role');
+                $userId = ($this->getId($model->username)['id']);
+                $authassignment->item_name = $model->roles;
                 $authassignment->user_id = $userId;
-//                var_dump( Yii::$app->request->post('user_role') . ' ' .$userId);
                 if ($authassignment->save()) {
-                    return $this->goHome();
+                    $this->actionIndex();
                 }
 
             }
@@ -95,9 +93,9 @@ class UserController extends Controller
         return $this->render('create', compact('model', 'roles'));
     }
 
-    public function getId($email)
+    public function getId($username)
     {
-        $userID = User::findOne(['email' => $email]);
+        $userID = User::findOne(['username' => $username]);
         return $userID;
     }
 

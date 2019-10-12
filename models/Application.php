@@ -44,6 +44,9 @@ class Application extends \yii\db\ActiveRecord
     public $image_com_f;
     public $image_cer_f;
     public $image_pub_f;
+    public $application_status;
+    public $type_for_total;
+    public $impact_factor_type;
 
     /**
      * {@inheritdoc}
@@ -62,8 +65,6 @@ class Application extends \yii\db\ActiveRecord
                     ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
                     ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
                 ],
-                // если вместо метки времени UNIX используется datetime:
-                // 'value' => new Expression('NOW()'),
             ],
         ];
 
@@ -81,7 +82,7 @@ class Application extends \yii\db\ActiveRecord
 //            ['application_edition' , 'required' ,'message'=>'Необходимо заполнить имя приложения.'],
 //            [['phone_number', 'from_sdu', 'first_auhtor', 'number_of_author', 'is_agree', 'created_at', 'updated_at'], 'integer'],
 //            [['name', 'surname', 'patronymic', 'rank', 'email', 'link_for_application', 'type_of_application', 'application_edition', 'ISSN', 'ISBN', 'DOI_link'], 'string', 'max' => 255],
-        [['publication_name', 'application_image'] , 'safe']
+        [['publication_name', 'application_image' , 'thomson_reuters' , 'skopus' , 'english_france' ,'RKBGM'] , 'safe']
         ];
     }
 
@@ -111,7 +112,7 @@ class Application extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'type' => '',
-            'authors' => 'hello',
+            'authors' => '',
         ];
     }
 
@@ -130,7 +131,7 @@ class Application extends \yii\db\ActiveRecord
             ->select('application_image.image_url AS imageUrl ')
             ->from('application')
             ->innerJoin('application_image' , 'application.id = application_image.application_id')
-            ->where('application_image.application_id  = 123')
+            ->where('application_image.application_id  = :id')->params([':id' => $id])
             ->all();
     }
 

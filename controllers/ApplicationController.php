@@ -75,7 +75,6 @@ class ApplicationController extends Controller
     {
 
 
-
         $model = new Application();
         $authorModel = new Author();
 
@@ -86,63 +85,84 @@ class ApplicationController extends Controller
         $model->email = (User::findOne(['id' => Yii::$app->user->getId()]))->email;
         $model->publication_name = (Yii::$app->getRequest()->post('Application')['publication_name']);
         $model->rank = (Yii::$app->getRequest()->post('Application')['rank']);
-        $model->phone_number  = (Yii::$app->getRequest()->post('Application')['phone_number']);
-        $model ->google_scholar_url = (Yii::$app->getRequest()->post('Application')['google_scholar_Url']);
-        $model ->research_gate_url = (Yii::$app->getRequest()->post('Application')['research_gate_Url']);
-        $model ->academia_url = (Yii::$app->getRequest()->post('Application')['academia_Url']);
-        $model ->google_scholar_url = (Yii::$app->getRequest()->post('Application')['application_edition']);
-        $model ->publishing_house = (Yii::$app->getRequest()->post('Application')['publishing_house']);
-        $model ->number = (Yii::$app->getRequest()->post('Application')['number']);
-        $model ->ISSN = (Yii::$app->getRequest()->post('Application')['ISSN']);
-        $model ->number_of_page = (Yii::$app->getRequest()->post('Application')['all_page']);
-        $model ->pages = (Yii::$app->getRequest()->post('Application')['pages']);
-        $model ->DOI_link = (Yii::$app->getRequest()->post('Application')['DOI_link']);
-        $model ->type_of_application = (Yii::$app->getRequest()->post('Application')['type_of_application']);
-        $model -> is_agree = (Yii::$app->getRequest()->post('Application' )['is_agree']);
-        $model -> user_id  = Yii::$app->user->getId();
+        $model->phone_number = (Yii::$app->getRequest()->post('Application')['phone_number']);
+        $model->google_scholar_url = (Yii::$app->getRequest()->post('Application')['google_scholar_Url']);
+        $model->research_gate_url = (Yii::$app->getRequest()->post('Application')['research_gate_Url']);
+        $model->academia_url = (Yii::$app->getRequest()->post('Application')['academia_Url']);
+        $model->google_scholar_url = (Yii::$app->getRequest()->post('Application')['application_edition']);
+        $model->publishing_house = (Yii::$app->getRequest()->post('Application')['publishing_house']);
+        $model->number = (Yii::$app->getRequest()->post('Application')['number']);
+        $model->ISSN = (Yii::$app->getRequest()->post('Application')['ISSN']);
+        $model->number_of_page = (Yii::$app->getRequest()->post('Application')['all_page']);
+        $model->pages = (Yii::$app->getRequest()->post('Application')['pages']);
+        $model->DOI_link = (Yii::$app->getRequest()->post('Application')['DOI_link']);
+        $model->type_of_application = (Yii::$app->getRequest()->post('Application')['type_of_application']);
+        $model->is_agree = (Yii::$app->getRequest()->post('Application')['is_agree']);
+        $model->user_id = Yii::$app->user->getId();
+        $app_type = (Yii::$app->getRequest()->post('Application')['impact_factor_type']) !== null ? (Yii::$app->getRequest()->post('Application')['impact_factor_type']) : '';
+//        $array =  ? (Yii::$app->getRequest()->post('Application')['type_for_total']) : [];
+        $model->impact_factor = $app_type;
+        if((Yii::$app->getRequest()->post('Application')['type_for_total']) !== null && (int)(Yii::$app->getRequest()->post('Application')['type_for_total']) != 0   ){
+            $array = (Yii::$app->getRequest()->post('Application')['type_for_total']);
+            if(in_array(1 ,$array)){
+                $model->thomson_reuters = 1;
+            }
+            if(in_array(2 ,$array)){
+                $model->skopus = 1;
+            }
+            if(in_array(3 ,$array)){
+                $model->english_france = 1;
+            }
+            if(in_array(4 ,$array)){
+                $model->RKBGM = 1;
+            }
+        }
+
 
         $directory = Yii::getAlias('@app/web/images/temp') . DIRECTORY_SEPARATOR . Yii::$app->session->id . DIRECTORY_SEPARATOR;
-        $to_directory = Yii::getAlias('@app/web/uploads/application_files') . DIRECTORY_SEPARATOR;
+        $to_directory = Yii::getAlias('@app/web/images/application_files') . DIRECTORY_SEPARATOR;
 
         $db = Yii::$app->db;
         $transaction = $db->beginTransaction();
 
+        if (!is_dir($to_directory)) {
+            FileHelper::createDirectory($to_directory, 0775, true);
+        }
 
 
         try {
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 $authors = Yii::$app->request->post('Application')['authors'];
 
-                foreach ($authors as $author){
+                foreach ($authors as $author) {
                     Yii::$app->db->createCommand()->insert('author', [
                         'full_name' => $author,
                         'application_id' => $model->id,
                     ])->execute();
                 }
 
-                if(is_dir($directory)){
+                if (is_dir($directory)) {
                     $files = scandir($directory);
-                    foreach ($files as $key => $value){
-                        if(!in_array($value , ['.', '..'])){
-                            $image_type = substr($value, 0,5);
+                    foreach ($files as $key => $value) {
+                        if (!in_array($value, ['.', '..'])) {
+                            $image_type = substr($value, 0, 5);
                             $imageupload = new ApplicationImage();
-                            $imageupload -> application_id = $model->id;
-                            $imageupload -> image_url = $value;
-                            $imageupload -> image_type = $image_type;
-                            $imageupload -> save();
+                            $imageupload->application_id = $model->id;
+                            $imageupload->image_url = $value;
+                            $imageupload->image_type = $image_type;
+                            $imageupload->save();
                         }
                     }
 
                     $files = scandir($directory);
-                    foreach($files as $key => $value){
-                        if(!in_array($value, ['.' , '..'])){
-                            $path = $directory.$value;
-                            $to_path = $to_directory.$value;
+                    foreach ($files as $key => $value) {
+                        if (!in_array($value, ['.', '..'])) {
+                            $path = $directory . $value;
+                            $to_path = $to_directory . $value;
                             rename($path, $to_path);
                         }
                     }
                 }
-
 
 
                 $db->transaction->commit();
@@ -150,13 +170,12 @@ class ApplicationController extends Controller
             }
 
             $transaction->commit();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $transaction->rollBack();
             throw $e;
-        } catch(\Throwable $e) {
+        } catch (\Throwable $e) {
             $transaction->rollBack();
         }
-
 
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -189,6 +208,7 @@ class ApplicationController extends Controller
         ]);
     }
 
+
     /**
      * Deletes an existing Application model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -219,32 +239,88 @@ class ApplicationController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    public function actionMyApplication(){
+    public function actionMyApplication()
+    {
 //        var_dump(Yii::$app->user->getId());
-        if(Yii::$app->user->can('stuff')){
+        if (Yii::$app->user->can('stuff')) {
             $searchModel = new ApplicationSearch();
             $dataProvider = $searchModel->searchForstuffs(Yii::$app->request->queryParams);
-
-            return $this->render('index', [
+//
+            return $this->render('myapplication', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
             ]);
-            return $this->render('myapplication');
+//            return $this->render('myapplication');
         }
     }
+
+    public function actionShowApplication($id = null)
+    {
+        $model = Application::findOne(['id' => $id]);
+
+        $total_sum = 0;
+        if($model->impact_factor){
+            switch ($model->impact_factor) {
+                case 1:
+                    $total_sum += 100000;
+                    break;
+                case 2:
+                    $total_sum += 250000;
+                    break;
+                case 3:
+                    $total_sum += 500000;
+                    break;
+                case 4:
+                    $total_sum += 750000;
+                    break;
+            }
+        }
+        if($model->thomson_reuters){
+            $total_sum += 45000;
+        }
+        if($model->skopus){
+            $total_sum += 35000;
+        }
+        if($model->english_france){
+            $total_sum += 20000;
+        }
+        if($model->RKBGM){
+            $total_sum +=10000;
+        }
+
+        
+
+        return $this->render('show_application', [
+            'model' => $model,
+            'total_sum' => $total_sum,
+        ]);
+    }
+
+    public function actionFormStatus()
+    {
+        $model = Application::findOne(['id' => Yii::$app->request->get('id')]);
+        if (Yii::$app->request->isAjax) {
+            $model->status = Yii::$app->request->post('data');
+            if ($model->save())
+                Yii::$app->session->setFlash('success', 'Статус успешно изменен');
+                return $this->redirect('/application/index');
+        } else {
+            Yii::$app->session->setFlash('danger', 'Произошла ошибка');
+            return $this->redirect('/application/index');
+        }
+    }
+
     public function actionImageUpload()
     {
         $model = new Application();
 
         $type_image = Yii::$app->getRequest()->get('type');
 
-        if($type_image == 'PUB_F'){
+        if ($type_image == 'PUB_F') {
             $imageFile = UploadedFile::getInstance($model, 'image_pub_f');
-        }
-        elseif($type_image == 'CER_F'){
+        } elseif ($type_image == 'CER_F') {
             $imageFile = UploadedFile::getInstance($model, 'image_cer_f');
-        }
-        elseif($type_image == 'COM_F'){
+        } elseif ($type_image == 'COM_F') {
             $imageFile = UploadedFile::getInstance($model, 'image_com_f');
         }
 
@@ -256,7 +332,7 @@ class ApplicationController extends Controller
 
         if ($imageFile) {
             $uid = uniqid(time(), true);
-            $fileName = $type_image . $uid .'.'. $imageFile->extension ;
+            $fileName = $type_image . $uid . '.' . $imageFile->extension;
             $filePath = $directory . $fileName;
             if ($imageFile->saveAs($filePath)) {
                 $path = '/images/temp/' . Yii::$app->session->id . DIRECTORY_SEPARATOR . $fileName;
@@ -277,7 +353,6 @@ class ApplicationController extends Controller
 
         return '';
     }
-
 
 
     public function actionImageDelete($name)

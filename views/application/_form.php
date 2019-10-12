@@ -76,21 +76,6 @@ use limion\jqueryfileupload\JQueryFileUpload;
                 </div>
 
                 <div class="col-sm-12 row-no-gutters for-checkbox-css" style="margin-top: -2rem;" >
-<!--                    <div class="col-sm-2 text-left">-->
-<!--                        --><?//= $form->field($model, 'type_of_application')->checkbox(['name' => 'checks-disable'])->label('Статья',['class' => 'label-class-left-2'])?>
-<!--                    </div>-->
-<!--                    <div class="col-sm-2 text-left">-->
-<!--                        --><?//= $form->field($model, 'type_of_application')->checkbox(['name' => 'checks-disable'])->label('Книга' ,['class' => 'label-class-left-2 ']) ?>
-<!--                    </div>-->
-<!--                    <div class="col-sm-2 text-left">-->
-<!--                        --><?//= $form->field($model, 'type')->radio(['class' => 'checks-disable' , 'disabled'=>true])->label('Интервью' ,['class' => 'label-class-left-2 '])?>
-<!--                    </div>-->
-<!--                    <div class="col-sm-2 text-left">-->
-<!--                        --><?//= $form->field($model, 'type')->radio(['class' => 'checks-disable' , 'disabled'=>true])-> label('Патент' ,['class' => 'label-class-left-2 '])?>
-<!--                    </div>-->
-<!--                    <div class="col-sm-4 text-left">-->
-<!--                        --><?//= $form->field($model, 'type')->radio(['class' => 'checks-disable' , 'disabled'=>true])->label('Обьекты авторских прав',['class' => 'label-class-left-2'])?>
-<!--                    </div>-->
                     <div class="col-sm-12 text-left">
                         <?= $form->field($model , 'type_of_application') ->radioList(
                                 [
@@ -119,7 +104,6 @@ use limion\jqueryfileupload\JQueryFileUpload;
 
 
                     ?>
-<!--                    --><?//= $form->field($model, 'application_edition')->textarea(['rows' => 2])->label('Имя книги.',['class' => 'label-class-left book hidden']); ?>
                 </div>
 
                 <div class="col-sm-12">
@@ -161,23 +145,33 @@ use limion\jqueryfileupload\JQueryFileUpload;
                     </div>
                 </div>
 
+                <div class="col-sm-12"  style="margin-top: 1.5rem;">
+                    <?= $form->field($model , 'impact_factor_type')->dropDownList([
+                        1 => '0 - 0,49',
+                        2 => '0,5 - 1,49',
+                        3 => '1,5 - 2,49',
+                        4 => 'выше чем 2,9',
+                    ])->label('Выберите импакт фактор') ?>
+                </div>
 
+
+                <div class="col-sm-12"  style="margin-top: 1.5rem;">
+                    <?= $form->field($model , 'type_for_total')->checkboxList(
+                            [
+                                    1 => 'Был опубликован в инормационной базе Томсан Рейтер',
+                                    2 => 'Был опубликован в базе Скопус',
+                                    3 => 'Был рецензирован в журналах Английского , Немецкого и Французкого языка',
+                                    4 => 'Был опубликован в КР БГМ',
+                            ],
+                            [
+                                'separator' => '<br>',
+                            ]
+                    ); ?>
+                </div>
 
                 <div class="col-sm-12">
                     <?= $form->field($model, 'DOI_link')->textInput()->label('Ссылка на DOI: ',['class' => 'label-class-left']) ?>
                 </div>
-
-<!--                <div class="col-sm-12 row">-->
-<!--                    <div class="col-sm-3">-->
-<!--                        <a class="publication_file" style="padding:0; margin:0; cursor: pointer; font-size: 1.8rem;"><span class="hide-1">Прикрепить статью</span> <span class="hide-2 hidden">Прикрепить информацию про издание</span><span style="color: lightgreen; font-size: 2rem;">&#9745;</span> </a>-->
-<!--                    </div>-->
-<!--                    <div class="col-sm-4 for-hide">-->
-<!--                        <a class="certificate_file" style="padding:0; margin:0; cursor: pointer; font-size: 1.8rem;">Прикрепить сертификаты <span style="color: lightgreen; font-size: 2rem;">&#9745;</span> </a>-->
-<!--                    </div>-->
-<!--                    <div class="col-sm-5">-->
-<!--                        <a class="completed_file" style="padding:0; margin:0; cursor: pointer; font-size: 1.8rem;">Прикрепить дополнительные файлы <span style="color: lightgreen; font-size: 2rem;">&#9745;</span> </a>-->
-<!--                    </div>-->
-<!--                </div>-->
                 <div class="col-sm-12 text-left" style="font-size: 1.8rem;">
                     <?= $form->field($model , 'type_of_application') ->radioList(
                         [
@@ -434,8 +428,6 @@ $js = <<<JS
         $('.compl_file').removeClass('hidden');
         
     });
-   
-    
 JS;
 
 $this->registerJs($js);

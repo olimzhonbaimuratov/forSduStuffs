@@ -39,7 +39,8 @@ AppAsset::register($this);
                     ['label' => 'Главная', 'url' => ['/site/index']],
                     ['label' => 'Посмотреть приложение', 'url' => ['/application/']],
                     ['label' => 'Создать приложение', 'url' => ['/application/create']],
-                    ['label' => 'Посмотреть всех ролей и пользователей', 'url' => ['/rbac']],
+                    ['label' => 'Добавить новых поьзователей', 'url' => ['/admin/user/create']],
+
                     Yii::$app->user->isGuest ? (
                     ['label' => 'Login', 'url' => ['/site/login']]
                     ) : (
@@ -105,11 +106,8 @@ AppAsset::register($this);
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
                 'items' => [
-                    ['label' => 'Главная', 'url' => ['/site/index']],
-                    ['label' => 'О нас', 'url' => ['/site/about']],
-                    ['label' => 'Контакты', 'url' => ['/site/contact']],
-                    ['label' => 'Регистрация', 'url' => ['/site/signup']],
-                    ['label' => 'Посты' , 'url' => ['post/index']],
+                    ['label' => 'Посмотреть приложение ', 'url' => ['/application/index']],
+                    ['label' => 'Создать приложение  ', 'url' => ['/application/create']],
                     Yii::$app->user->isGuest ? (
                     ['label' => 'Login', 'url' => ['/site/login']]
                     ) : (
