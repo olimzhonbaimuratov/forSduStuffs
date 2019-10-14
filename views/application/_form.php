@@ -115,6 +115,7 @@ use limion\jqueryfileupload\JQueryFileUpload;
                                 'allowEmptyList'    => true,
                                 'enableGuessTitle'  => false,
                                 'addButtonPosition' => MultipleInput::POS_ROW,
+
                             ])
                                 ->label('Авторы:');
                         ?>
@@ -216,7 +217,7 @@ use limion\jqueryfileupload\JQueryFileUpload;
                             ],
                             'clientOptions' => [
                                 'maxFileSize' => 2000000,
-                                'autoLoad' => true
+                                'autoUpload' => true
                             ],
                             // ...
                             'clientEvents' => [
@@ -243,7 +244,8 @@ use limion\jqueryfileupload\JQueryFileUpload;
                                 'accept' => 'image/*'
                             ],
                             'clientOptions' => [
-                                'maxFileSize' => 2000000
+                                'maxFileSize' => 2000000,
+                                'autoUpload' => true
                             ],
                             // ...
                             'clientEvents' => [
@@ -269,7 +271,8 @@ use limion\jqueryfileupload\JQueryFileUpload;
                                 'accept' => 'image/*'
                             ],
                             'clientOptions' => [
-                                'maxFileSize' => 2000000
+                                'maxFileSize' => 2000000,
+                                'autoUpload' => true
                             ],
                             // ...
                             'clientEvents' => [
