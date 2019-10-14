@@ -13,9 +13,13 @@ class m191006_160255_add_first_name_last_name_ptronymic_to_user extends Migratio
     public function safeUp()
     {
         $columns = $this->db->getTableSchema('user')->columns;
-        if(!isset($columns['first_name']) && !isset($columns['last_name']) && !isset($columns['patronymic'])){
-            $this->addColumn('user' , 'first_name' , $this->string());
+        if(!isset($columns['last_name'])){
             $this->addColumn('user' , 'last_name' , $this->string());
+        }
+        if(!isset($columns['first_name'])){
+            $this->addColumn('user' , 'first_name' , $this->string());
+        }
+        if(!isset($columns['patronymic']) && !isset($columns['last_name'])){
             $this->addColumn('user' , 'patronymic' ,  $this->string());
         }
     }

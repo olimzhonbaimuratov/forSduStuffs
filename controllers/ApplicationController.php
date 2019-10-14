@@ -79,10 +79,10 @@ class ApplicationController extends Controller
         $authorModel = new Author();
 
         $user = User::findOne(['id' => Yii::$app->user->getId()]);
-        $model->name = (User::findOne(['id' => Yii::$app->user->getId()]))->username;
-        $model->surname = (User::findOne(['id' => Yii::$app->user->getId()]))->username;
-        $model->patronymic = (User::findOne(['id' => Yii::$app->user->getId()]))->username;
-        $model->email = (User::findOne(['id' => Yii::$app->user->getId()]))->email;
+        $model->name = (User::findOne(['id' => Yii::$app->user->getId()]))->first_name;
+        $model->surname = (User::findOne(['id' => Yii::$app->user->getId()]))->last_name;
+        $model->patronymic = (User::findOne(['id' => Yii::$app->user->getId()]))->patronymic;
+//        $model->email = (User::findOne(['id' => Yii::$app->user->getId()]))->email;
         $model->publication_name = (Yii::$app->getRequest()->post('Application')['publication_name']);
         $model->rank = (Yii::$app->getRequest()->post('Application')['rank']);
         $model->phone_number = (Yii::$app->getRequest()->post('Application')['phone_number']);

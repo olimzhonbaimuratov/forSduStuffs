@@ -84,7 +84,12 @@ class UserController extends Controller
                 $authassignment->item_name = $model->roles;
                 $authassignment->user_id = $userId;
                 if ($authassignment->save()) {
-                    $this->actionIndex();
+                    $searchModel = new UserSearch();
+                    $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+                    return $this->render('index', [
+                        'searchModel' => $searchModel,
+                        'dataProvider' => $dataProvider,
+                    ]);
                 }
 
             }

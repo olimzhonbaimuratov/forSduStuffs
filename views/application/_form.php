@@ -31,7 +31,7 @@ use limion\jqueryfileupload\JQueryFileUpload;
                         <h4 style="font-family: 'Poppins', sans-serif;"><b><?= \app\models\User::findOne(['id' => Yii::$app->user->getId()])->first_name;?></b></h4>
                         <span style="font-weight: bold;">Фамилия</span> <p style="font-family: 'Poppins', sans-serif;"><?= \app\models\User::findOne(['id' => Yii::$app->user->getId()])->last_name;?></p>
                         <span style="font-weight: bold;">Отчество</span><p style="font-family: 'Poppins', sans-serif;"><?= \app\models\User::findOne(['id' => Yii::$app->user->getId()])->patronymic;?></p>
-                        <span style="font-weight: bold;">Эл-почта</span><p class="this_p" style="overflow-x: auto; font-family: 'Poppins', sans-serif;"><?= \app\models\User::findOne(['id' => Yii::$app->user->getId()])->email;?></p>
+<!--                        <span style="font-weight: bold;">Эл-почта</span><p class="this_p" style="overflow-x: auto; font-family: 'Poppins', sans-serif;">--><?//= \app\models\User::findOne(['id' => Yii::$app->user->getId()])->email;?><!--</p>-->
                         <span style="font-weight: bold;">Должность</span><p class="this_p" style="overflow-x: auto; font-family: 'Poppins', sans-serif;"><?= \app\models\User::findOne(['id' => Yii::$app->user->getId()])->responsibility;?></p>
                     </div>
                 </div>
@@ -215,7 +215,8 @@ use limion\jqueryfileupload\JQueryFileUpload;
                                 'accept' => 'image/*'
                             ],
                             'clientOptions' => [
-                                'maxFileSize' => 2000000
+                                'maxFileSize' => 2000000,
+                                'autoLoad' => true
                             ],
                             // ...
                             'clientEvents' => [

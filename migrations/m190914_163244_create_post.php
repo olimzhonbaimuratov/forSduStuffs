@@ -30,12 +30,12 @@ class m190914_163244_create_post extends Migration
     public function up()
     {
 
-        $this->createTable('post' , [
-            'id' => $this->primaryKey(),
-            'title' => $this->string(),
-            'description' => $this->text(),
-            'user_id' => $this->integer()
-        ]);
+//        $this->createTable('post' , [
+//            'id' => $this->primaryKey(),
+//            'title' => $this->string(),
+//            'description' => $this->text(),
+//            'user_id' => $this->integer()
+//        ]);
 
     }
 

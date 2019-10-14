@@ -13,7 +13,7 @@ class m191006_190603_add_column_application_status_to_table_application extends 
     public function safeUp()
     {
         $columns = $this->db->getTableSchema('application' )->columns;
-        if(!isset($columns['application_status'])){
+        if(!isset($columns['application_id'])){
             $this->addColumn('application' , 'application_id' , $this->string());
         }
     }
