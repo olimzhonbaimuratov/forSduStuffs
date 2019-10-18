@@ -354,6 +354,42 @@ class ApplicationController extends Controller
         return '';
     }
 
+    public function actionGetUrl(){
+        if(Yii::$app->request->isAjax){
+            $data =Yii::$app->request->post('data');
+
+            if(isset($data)){
+                switch ($data){
+                    case 'google_scholar_url' :
+                        $google_scholar_url = Application::findOne(['id' => Yii::$app->request->get('id')]);
+                        $google_scholar_url = $google_scholar_url->google_scholar_url;
+                        return json_encode(['gate' , $google_scholar_url]);
+                        break;
+
+                    case 'academia_url':
+                        $academia_url = Application::findOne(['id' => Yii::$app->request->get('id')]);
+                        $academia_url = $academia_url->academia_url;
+                        return json_encode(['gate' , $academia_url]);
+                        break;
+
+                    case 'research_gate_url':
+                        $research_gate_url = Application::findOne(['id' => Yii::$app->request->get('id')]);
+                        $research_gate_url = $research_gate_url->research_gate_url;
+                        return json_encode(['gate',$research_gate_url]);
+                        break;
+
+                    case 'article':
+                        $article = Application::getImages(Yii::$app->request->get('id'));
+                        return  json_encode($article);
+                        break;
+
+
+                }
+            }
+
+        }
+    }
+
 
     public function actionImageDelete($name)
     {
