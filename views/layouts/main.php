@@ -66,7 +66,7 @@ AppAsset::register($this);
                 ['label' => 'Мои приложение ', 'url' => ['/site/index']],
                 ['label' => 'О нас', 'url' => ['/site/about']],
                 ['label' => 'Контакты', 'url' => ['/site/contact']],
-                ['label' => 'Регистрация', 'url' => ['/site/signup']],
+                ['label' => '(Регистрация)', 'url' => ['/site/signup']],
 
                 ['label' => 'Посты' , 'url' => ['post/index']],
                 Yii::$app->user->isGuest ? (
