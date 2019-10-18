@@ -23,6 +23,7 @@ use Yii;
  * @property AuthItem[] $parents
  */
 class AuthItem extends \yii\db\ActiveRecord
+
 {
     /**
      * {@inheritdoc}

@@ -30,6 +30,7 @@ class AuthAssignment extends \yii\db\ActiveRecord
                 // 'value' => new Expression('NOW()'),
             ],
         ];
+
     }
 
 

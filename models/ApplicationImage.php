@@ -24,6 +24,7 @@ class ApplicationImage extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'application_image';
+
     }
 
     /**
@@ -46,6 +47,7 @@ class ApplicationImage extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'application_id' => 'Application ID',
+
             'image_url' => 'Image Url',
         ];
     }
@@ -54,6 +56,7 @@ class ApplicationImage extends \yii\db\ActiveRecord
      * @return \yii\db\ActiveQuery
      */
     public function getApplication()
+
     {
         return $this->hasOne(Application::className(), ['id' => 'application_id']);
     }

@@ -29,6 +29,7 @@ class PostSearch extends Post
     {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
+
     }
 
     /**

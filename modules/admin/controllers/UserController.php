@@ -30,6 +30,7 @@ class UserController extends Controller
                 'actions' => [
                     'delete' => ['POST'],
                 ],
+
             ],
         ];
     }
@@ -41,6 +42,7 @@ class UserController extends Controller
     public function actionIndex()
     {
         $searchModel = new UserSearch();
+
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [

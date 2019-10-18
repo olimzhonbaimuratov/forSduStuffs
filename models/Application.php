@@ -10,6 +10,7 @@ use yii\db\ActiveRecord;
  * This is the model class for table "application".
  *
  * @property int $id
+ *
  * @property string $name
  * @property string $surname
  * @property string $patronymic
@@ -51,6 +52,7 @@ class Application extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'application';
+
     }
 
     public function behaviors()
@@ -61,6 +63,7 @@ class Application extends \yii\db\ActiveRecord
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
                     ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+
                 ],
                 // если вместо метки времени UNIX используется datetime:
                 // 'value' => new Expression('NOW()'),
@@ -90,6 +93,7 @@ class Application extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
+
             'id' => 'ID',
             'name' => 'Имя',
             'surname' => 'Фамилия',

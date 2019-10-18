@@ -17,6 +17,7 @@ class ApplicationSearch extends Application
     public function rules()
     {
         return [
+
             [['id', 'phone_number', 'from_sdu', 'first_auhtor', 'number_of_author', 'is_agree', 'created_at', 'updated_at'], 'integer'],
             [['name', 'surname', 'patronymic', 'rank', 'email', 'link_for_application', 'type_of_application', 'application_edition', 'ISSN', 'ISBN', 'DOI_link'], 'safe'],
         ];

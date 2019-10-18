@@ -8,6 +8,7 @@ use yii\web\Controller;
  * Default controller for the `admin` module
  */
 class DefaultController extends Controller
+
 {
     /**
      * Renders the index view for the module
@@ -17,5 +18,6 @@ class DefaultController extends Controller
     {
 
         return $this->render('index');
+
     }
 }
