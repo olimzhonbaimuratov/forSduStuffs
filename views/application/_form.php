@@ -146,7 +146,7 @@ use limion\jqueryfileupload\JQueryFileUpload;
                     </div>
                 </div>
 
-                <div class="col-sm-12"  style="margin-top: 1.5rem;">
+                <div class="col-sm-12"  style="margin-top: 1.5rem;font-size: 1.8rem;">
                     <?= $form->field($model , 'impact_factor_type')->dropDownList([
                         1 => '0 - 0,49',
                         2 => '0,5 - 1,49',
@@ -155,8 +155,7 @@ use limion\jqueryfileupload\JQueryFileUpload;
                     ])->label('Выберите импакт фактор') ?>
                 </div>
 
-
-                <div class="col-sm-12"  style="margin-top: 1.5rem;">
+                <div class="col-sm-12"  style="margin-top: 1.5rem; font-size: 1.8rem;">
                     <?= $form->field($model , 'type_for_total')->checkboxList(
                             [
                                     1 => 'Был опубликован в инормационной базе Томсан Рейтер',
@@ -167,7 +166,7 @@ use limion\jqueryfileupload\JQueryFileUpload;
                             [
                                 'separator' => '<br>',
                             ]
-                    ); ?>
+                    )->label('Статус публикаций для подчета гонорар'); ?>
                 </div>
 
                 <div class="col-sm-12">

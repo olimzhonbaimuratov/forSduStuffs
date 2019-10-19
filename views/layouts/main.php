@@ -38,7 +38,6 @@ AppAsset::register($this);
                 'items' => [
                     ['label' => 'Главная', 'url' => ['/site/index']],
                     ['label' => 'Посмотреть приложение', 'url' => ['/application/']],
-                    ['label' => 'Создать приложение', 'url' => ['/application/create']],
                     ['label' => 'Добавить новых поьзователей', 'url' => ['/admin/user/create']],
 
                     Yii::$app->user->isGuest ? (

@@ -301,6 +301,7 @@ class ApplicationController extends Controller
         $model = Application::findOne(['id' => Yii::$app->request->get('id')]);
         if (Yii::$app->request->isAjax) {
             $model->status = Yii::$app->request->post('data');
+            $model->reason_of_rejected = Yii::$app->request->post('reason');
             if ($model->save())
                 Yii::$app->session->setFlash('success', 'Статус успешно изменен');
                 return $this->redirect('/application/index');
@@ -357,39 +358,85 @@ class ApplicationController extends Controller
     public function actionGetUrl(){
         if(Yii::$app->request->isAjax){
             $data =Yii::$app->request->post('data');
-
             if(isset($data)){
                 switch ($data){
                     case 'google_scholar_url' :
                         $google_scholar_url = Application::findOne(['id' => Yii::$app->request->get('id')]);
                         $google_scholar_url = $google_scholar_url->google_scholar_url;
-                        return json_encode(['gate' , $google_scholar_url]);
+                        return $google_scholar_url;
                         break;
 
                     case 'academia_url':
                         $academia_url = Application::findOne(['id' => Yii::$app->request->get('id')]);
                         $academia_url = $academia_url->academia_url;
-                        return json_encode(['gate' , $academia_url]);
+                        return ($academia_url);
                         break;
 
                     case 'research_gate_url':
                         $research_gate_url = Application::findOne(['id' => Yii::$app->request->get('id')]);
                         $research_gate_url = $research_gate_url->research_gate_url;
-                        return json_encode(['gate',$research_gate_url]);
+                        return ($research_gate_url);
                         break;
-
-                    case 'article':
-                        $article = Application::getImages(Yii::$app->request->get('id'));
-                        return  json_encode($article);
-                        break;
-
-
                 }
             }
 
         }
     }
 
+    public function actionGetUrlImg(){
+        if(Yii::$app->request->isAjax){
+            $data =Yii::$app->request->post('data');
+            if(isset($data)){
+                switch ($data){
+                    case 'article':
+                        $imageArray = [];
+                        $article_images =  Application::find()->where(['id'=>Yii::$app->request->get('id')])->with('image')->asArray()->all();
+
+                        foreach ($article_images as $image){
+                            foreach($image['image'] as $image_url){
+                                if(substr($image_url['image_url'] , 0 ,3) == 'PUB'){
+                                    array_push($imageArray , $image_url['image_url']);
+                                }
+
+                            }
+                        }
+                        return json_encode($imageArray);
+                        break;
+
+                    case 'certificate' :
+                        $imageArray = [];
+                        $article_images =  Application::find()->where(['id'=>Yii::$app->request->get('id')])->with('image')->asArray()->all();
+
+                        foreach ($article_images as $image){
+                            foreach($image['image'] as $image_url){
+                                if(substr($image_url['image_url'] , 0 ,3) == 'CER'){
+                                    array_push($imageArray , $image_url['image_url']);
+                                }
+
+                            }
+                        }
+                        return json_encode($imageArray);
+                        break;
+
+                    case 'complete_intelligence' :
+                        $imageArray = [];
+                        $article_images =  Application::find()->where(['id'=>Yii::$app->request->get('id')])->with('image')->asArray()->all();
+
+                        foreach ($article_images as $image){
+                            foreach($image['image'] as $image_url){
+                                if(substr($image_url['image_url'] , 0 ,3) == 'COM'){
+                                    array_push($imageArray , $image_url['image_url']);
+                                }
+
+                            }
+                        }
+                        return json_encode($imageArray);
+                }
+            }
+        }
+
+
+    }
 
     public function actionImageDelete($name)
     {
