@@ -51,7 +51,7 @@ use limion\jqueryfileupload\JQueryFileUpload;
                         <label for="date" style="float:left; font-family: 'Poppins', sans-serif; color: gray; ">День
                             сдачи: </label>
                         <input class="beauty_input" name='date' type="text" disabled value="<?php
-                        date_default_timezone_set('kazakhstan/Almaty');
+                        time();
                         echo $date = date('m/d/Y', time()); ?>">
                     </div>
                 </div>
