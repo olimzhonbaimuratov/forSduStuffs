@@ -23,10 +23,10 @@ use yii\helpers\ArrayHelper;
 <!--                    --><?//= $form->field($model, 'rank')->label('Департамент') ?>
                 </div>
                 <div class="col-sm-6">
-                    <?= $form->field($model, 'responsibility')->label('Должность') ?>
+<!--                    --><?//= $form->field($model, 'responsibility')->label('Должность') ?>
                     <?= $form->field($model, 'password')->passwordInput()->label('Пароль') ?>
                     <?= $form->field($model, 'retypePassword')->passwordInput()->label('Повторите пароль') ?>
-                    <?= $form->field($model, 'roles')->dropDownList(\app\models\User::getDropDownList())->label('Выберите роль'); ?>
+<!--                    --><?//= $form->field($model, 'roles')->dropDownList(\app\models\User::getDropDownList())->label('Выберите роль'); ?>
                 </div>
             </div>
             <div class="form-group">
