@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'ФИО',
                 'format' => 'raw',
                 'value' => function ($model) {
-                    $result = $model->user->first_name && $model->user->first_name . ' ' . $model->user->last_name . ' ' . $model->user->patronymic;
+                    $result = isset($model->user->first_name)? $model->user->first_name : null . ' ' . isset($model->user->last_name) ? $model->user->last_name : null . ' ' . isset($model->user->patronymic) ? $model->user->patronymic : null;
                     return Html::tag('a', $result);
                 }
 
