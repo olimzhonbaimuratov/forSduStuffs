@@ -10,7 +10,7 @@ use yii\helpers\Url;
 
 $this->title = 'Приложение';
 $this->params['breadcrumbs'][] = $this->title;
-echo $notify;
+//echo $notify;
 ?>
 <div class="application-index">
 
