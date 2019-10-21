@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function ($model) {
                     $result = '';
                     if (isset($model->user)) {
-                        $result = $model->user->first_name . ' ' .  $model->user->last_name  . ' ' . $model->user->patronymic;
+                        $result = $model->user->first_name . ' ' . $model->user->last_name . ' ' . $model->user->patronymic;
                     }
                     return Html::tag('a', $result);
                 }
@@ -80,7 +80,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Департамент',
                 'format' => 'raw',
                 'value' => function ($model) {
-                    return $model->user->rank;
+                    if ($model->user) {
+                        return $model->user->rank;
+                    }
+                    return null;
                 }
             ],
             [
