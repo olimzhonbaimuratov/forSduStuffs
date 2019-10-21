@@ -34,15 +34,15 @@ $this->params['breadcrumbs'][] = $this->title;
                         <table id="customers">
                             <tr>
                                 <td style="font-weight: bold;">Имя</td>
-                                <td><?= $model->user->first_name ?></td>
+                                <td><?= $model->user ? $model->user->first_name :null ?></td>
                             </tr>
                             <tr>
                                 <td style="font-weight: bold;">Фамилия</td>
-                                <td><?= $model->user->last_name ?></td>
+                                <td><?=  $model->user ? $model->user->last_name :null  ?></td>
                             </tr>
                             <tr>
                                 <td style="font-weight: bold;">Отчество</td>
-                                <td><?= $model->user->patronymic ?></td>
+                                <td><?= $model->user ? $model->user->patronymic : null; ?></td>
                             </tr>
                             <tr>
                                 <td style="font-weight: bold;">Имя публикаций</td>
