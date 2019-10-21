@@ -158,7 +158,7 @@ $this->params['breadcrumbs'][] = $this->title;
         color: white;
     }
 </style>
-<script src="/assets/6f0d5075/jquery.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
     $('#confirm').bind('click', function () {
         $.ajax({
