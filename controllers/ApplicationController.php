@@ -91,7 +91,7 @@ class ApplicationController extends Controller
         $model->google_scholar_url = (Yii::$app->getRequest()->post('Application')['google_scholar_Url']);
         $model->research_gate_url = (Yii::$app->getRequest()->post('Application')['research_gate_Url']);
         $model->academia_url = (Yii::$app->getRequest()->post('Application')['academia_Url']);
-        $model->google_scholar_url = (Yii::$app->getRequest()->post('Application')['application_edition']);
+        $model->google_scholar_url = (Yii::$app->getRequest()->post('Application')['google_scholar_url']);
         $model->publishing_house = (Yii::$app->getRequest()->post('Application')['publishing_house']);
         $model->number = (Yii::$app->getRequest()->post('Application')['number']);
         $model->ISSN = (Yii::$app->getRequest()->post('Application')['ISSN']);
