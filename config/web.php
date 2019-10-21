@@ -92,6 +92,7 @@ $config = [
     'as access' => [
         'class' => 'mdm\admin\components\AccessControl',
         'allowActions' => [
+            'site/*',
             'gii/*',
         ]
     ],
