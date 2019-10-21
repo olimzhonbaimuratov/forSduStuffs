@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Application;
+use app\models\User;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
@@ -51,7 +52,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             <tr>
                                 <td style="font-weight: bold;">Авторы</td>
                                 <td>
-                                    <?= '1) ' . '<span style="color:red">' . (\app\models\User::findOne(['id' => $model->user_id]) ? \app\models\User::findOne(['id' => $model->user_id])->first_name: null ) . ' ' . \app\models\User::findOne(['id' => $model->user_id])->last_name . '</span>' . '<br>' ?>
+                                    <?php $work = User::findOne(['id' => $model->user_id]); ?>
+                                    <?= '1) ' . '<span style="color:red">' . (isset($work) ? $work->first_name: null ) . ' ' . \app\models\User::findOne(['id' => $model->user_id])->last_name . '</span>' . '<br>' ?>
                                     <?php $counter = 2; ?>
                                     <?php foreach ($model->author as $author): ?>
                                         <?= $counter . ') ' . $author->full_name . '<br>' ?>
