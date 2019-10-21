@@ -17,7 +17,7 @@ use yii\helpers\ArrayHelper;
             <div class="row">
                 <div class="col-sm-6">
                     <?= $form->field($model, 'username')->label("ID-номер") ?>
-<!--                    --><?//= $form->field($model, 'first_name')->label('Имя') ?>
+                    <?= $form->field($model, 'first_name')->label('Имя') ?>
                     <?= $form->field($model, 'last_name')->label('Фамилия') ?>
                     <?= $form->field($model, 'patronymic')->label('Отчество') ?>
                     <?= $form->field($model, 'rank')->label('Департамент') ?>
