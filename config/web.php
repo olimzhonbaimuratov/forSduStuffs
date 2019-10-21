@@ -96,6 +96,7 @@ $config = [
             'gii/*',
             'application/*',
             'rbac/*',
+            'admin/user/*'
         ]
     ],
     'params' => $params,
