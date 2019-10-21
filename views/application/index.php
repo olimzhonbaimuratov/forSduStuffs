@@ -42,8 +42,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
                 'value' => function ($model) {
                     $result = '';
-                    if(isset($model->user)){
-                        $result = isset($model->user->first_name)? $model->user->first_name : null . ' ' . isset($model->user->last_name) ? $model->user->last_name : null . ' ' . isset($model->user->patronymic) ? $model->user->patronymic : null;
+                    if (isset($model->user)) {
+                        $result = $model->user->first_name . ' ' .  $model->user->last_name  . ' ' . $model->user->patronymic;
                     }
                     return Html::tag('a', $result);
                 }
@@ -69,7 +69,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Должность',
                 'format' => 'raw',
                 'value' => function ($model) {
-                    return $model->user->responsibility;
+                    if ($model->user) {
+                        return $model->user->responsibility;
+                    }
+
+                    return null;
                 }
             ],
             [
