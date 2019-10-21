@@ -26,7 +26,7 @@ AppAsset::register($this);
     <div class="wrap">
         <?php
         NavBar::begin([
-            'brandLabel' => Html::img('https://cdn.worldvectorlogo.com/logos/sdu.svg' , ['width' => 45 , 'height' => 45]),
+//            'brandLabel' => Html::img('https://cdn.worldvectorlogo.com/logos/sdu.svg' , ['width' => 45 , 'height' => 45]),
             'brandUrl' => Yii::$app->homeUrl,
             'options' => [
                 'class' => 'navbar-inverse navbar-fixed-top',

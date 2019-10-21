@@ -26,7 +26,7 @@ AppAsset::register($this);
     <div class="wrap">
         <?php
         NavBar::begin([
-            'brandLabel' => Html::img('http://sdu.edu.kz/media/filer_public/03/fd/03fd7d60-694d-4e38-bfc9-ec6e776b6361/logo.png' , ['width' => 30 , 'height' => 30]),
+//            'brandLabel' => Html::img('http://sdu.edu.kz/media/filer_public/03/fd/03fd7d60-694d-4e38-bfc9-ec6e776b6361/logo.png' , ['width' => 30 , 'height' => 30]),
             'brandUrl' => Yii::$app->homeUrl,
             'options' => [
                 'class' => 'navbar-inverse navbar-fixed-top',
