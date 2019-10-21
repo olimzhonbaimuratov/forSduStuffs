@@ -36,9 +36,10 @@ AppAsset::register($this);
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
                 'items' => [
-                    ['label' => 'Главная', 'url' => ['/site/index']],
                     ['label' => 'Посмотреть приложение', 'url' => ['/application/']],
                     ['label' => 'Добавить новых поьзователей', 'url' => ['/admin/user/create']],
+                    ['label' => 'Посмотреть всех поьзователей', 'url' => ['/admin/user/index']],
+                    ['label' => 'Управление ролями' , 'url'=> ['/rbac']],
 
                     Yii::$app->user->isGuest ? (
                     ['label' => 'Login', 'url' => ['/site/login']]
@@ -157,6 +158,7 @@ AppAsset::register($this);
             <p class="pull-right"><?= Yii::powered() ?></p>
         </div>
     </footer>
+
 
     <?php $this->endBody() ?>
     </body>

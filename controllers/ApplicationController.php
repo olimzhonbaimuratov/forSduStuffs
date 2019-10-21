@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\ApplicationImage;
 use app\models\Author;
+use app\models\Notification;
 use app\models\User;
 use Yii;
 use app\models\Application;
@@ -84,6 +85,7 @@ class ApplicationController extends Controller
         $model->patronymic = (User::findOne(['id' => Yii::$app->user->getId()]))->patronymic;
 //        $model->email = (User::findOne(['id' => Yii::$app->user->getId()]))->email;
         $model->publication_name = (Yii::$app->getRequest()->post('Application')['publication_name']);
+        $model->from_sdu = (Yii::$app->getRequest()->post('Application')['from_sdu']);
         $model->rank = (Yii::$app->getRequest()->post('Application')['rank']);
         $model->phone_number = (Yii::$app->getRequest()->post('Application')['phone_number']);
         $model->google_scholar_url = (Yii::$app->getRequest()->post('Application')['google_scholar_Url']);
@@ -100,20 +102,19 @@ class ApplicationController extends Controller
         $model->is_agree = (Yii::$app->getRequest()->post('Application')['is_agree']);
         $model->user_id = Yii::$app->user->getId();
         $app_type = (Yii::$app->getRequest()->post('Application')['impact_factor_type']) !== null ? (Yii::$app->getRequest()->post('Application')['impact_factor_type']) : '';
-//        $array =  ? (Yii::$app->getRequest()->post('Application')['type_for_total']) : [];
         $model->impact_factor = $app_type;
-        if((Yii::$app->getRequest()->post('Application')['type_for_total']) !== null && (int)(Yii::$app->getRequest()->post('Application')['type_for_total']) != 0   ){
+        if ((Yii::$app->getRequest()->post('Application')['type_for_total']) !== null && (int)(Yii::$app->getRequest()->post('Application')['type_for_total']) != 0) {
             $array = (Yii::$app->getRequest()->post('Application')['type_for_total']);
-            if(in_array(1 ,$array)){
+            if (in_array(1, $array)) {
                 $model->thomson_reuters = 1;
             }
-            if(in_array(2 ,$array)){
+            if (in_array(2, $array)) {
                 $model->skopus = 1;
             }
-            if(in_array(3 ,$array)){
+            if (in_array(3, $array)) {
                 $model->english_france = 1;
             }
-            if(in_array(4 ,$array)){
+            if (in_array(4, $array)) {
                 $model->RKBGM = 1;
             }
         }
@@ -259,7 +260,7 @@ class ApplicationController extends Controller
         $model = Application::findOne(['id' => $id]);
 
         $total_sum = 0;
-        if($model->impact_factor){
+        if ($model->impact_factor) {
             switch ($model->impact_factor) {
                 case 1:
                     $total_sum += 100000;
@@ -275,20 +276,28 @@ class ApplicationController extends Controller
                     break;
             }
         }
-        if($model->thomson_reuters){
+        if ($model->thomson_reuters) {
             $total_sum += 45000;
         }
-        if($model->skopus){
+        if ($model->skopus) {
             $total_sum += 35000;
         }
-        if($model->english_france){
+        if ($model->english_france) {
             $total_sum += 20000;
         }
-        if($model->RKBGM){
-            $total_sum +=10000;
+        if ($model->RKBGM) {
+            $total_sum += 10000;
+        }
+        $typeApplication = Application::findOne(['id' => $id])->type_of_application;
+        if ($typeApplication == 1) {
+            $total_sum_20 = ($total_sum / 100) * 20;
+            $count = Author::find()->andWhere(['application_id' => $id])->count();
+            $total_sum = ($total_sum / $count) + $total_sum_20;
+        } else {
+            $count = Author::find()->andWhere(['application_id' => $id])->count();
+            $total_sum = $total_sum / $count;
         }
 
-        
 
         return $this->render('show_application', [
             'model' => $model,
@@ -299,12 +308,30 @@ class ApplicationController extends Controller
     public function actionFormStatus()
     {
         $model = Application::findOne(['id' => Yii::$app->request->get('id')]);
+        $notify = new Notification();
         if (Yii::$app->request->isAjax) {
-            $model->status = Yii::$app->request->post('data');
+            if (Yii::$app->user->can('adminScienceDepartment')) {
+                $model->status = Yii::$app->request->post('data');
+                $notify_body = '';
+                $notify_body = $model->status == 1 ? 'Ваше приложение была подтверждена департаментом наук' : 'Ваше приложение была отказано департаментом наук';
+                $notify->notify_body = $notify_body;
+                $notify->application_id = Yii::$app->request->get('id');
+                $notify->application_by_role = 'adminScienceDepartment';
+            }
+
+            if (Yii::$app->user->can('accountant')) {
+                $notify_body = $model->status == 1 ? 'Ваше приложение была подтверждена бухгалтером' : 'Ваше приложение была отказано бухгалтером';
+                $model->status_by_accountant = Yii::$app->request->post('data');
+                $notify->notify_body = $notify_body;
+                $notify->application_id = Yii::$app->request->get('id');
+                $notify->application_by_role = 'accountant';
+            }
+
             $model->reason_of_rejected = Yii::$app->request->post('reason');
-            if ($model->save())
+
+            if ($model->save() && $notify->save())
                 Yii::$app->session->setFlash('success', 'Статус успешно изменен');
-                return $this->redirect('/application/index');
+            return $this->redirect('/application/index');
         } else {
             Yii::$app->session->setFlash('danger', 'Произошла ошибка');
             return $this->redirect('/application/index');
@@ -355,11 +382,12 @@ class ApplicationController extends Controller
         return '';
     }
 
-    public function actionGetUrl(){
-        if(Yii::$app->request->isAjax){
-            $data =Yii::$app->request->post('data');
-            if(isset($data)){
-                switch ($data){
+    public function actionGetUrl()
+    {
+        if (Yii::$app->request->isAjax) {
+            $data = Yii::$app->request->post('data');
+            if (isset($data)) {
+                switch ($data) {
                     case 'google_scholar_url' :
                         $google_scholar_url = Application::findOne(['id' => Yii::$app->request->get('id')]);
                         $google_scholar_url = $google_scholar_url->google_scholar_url;
@@ -383,19 +411,20 @@ class ApplicationController extends Controller
         }
     }
 
-    public function actionGetUrlImg(){
-        if(Yii::$app->request->isAjax){
-            $data =Yii::$app->request->post('data');
-            if(isset($data)){
-                switch ($data){
+    public function actionGetUrlImg()
+    {
+        if (Yii::$app->request->isAjax) {
+            $data = Yii::$app->request->post('data');
+            if (isset($data)) {
+                switch ($data) {
                     case 'article':
                         $imageArray = [];
-                        $article_images =  Application::find()->where(['id'=>Yii::$app->request->get('id')])->with('image')->asArray()->all();
+                        $article_images = Application::find()->where(['id' => Yii::$app->request->get('id')])->with('image')->asArray()->all();
 
-                        foreach ($article_images as $image){
-                            foreach($image['image'] as $image_url){
-                                if(substr($image_url['image_url'] , 0 ,3) == 'PUB'){
-                                    array_push($imageArray , $image_url['image_url']);
+                        foreach ($article_images as $image) {
+                            foreach ($image['image'] as $image_url) {
+                                if (substr($image_url['image_url'], 0, 3) == 'PUB') {
+                                    array_push($imageArray, $image_url['image_url']);
                                 }
 
                             }
@@ -405,12 +434,12 @@ class ApplicationController extends Controller
 
                     case 'certificate' :
                         $imageArray = [];
-                        $article_images =  Application::find()->where(['id'=>Yii::$app->request->get('id')])->with('image')->asArray()->all();
+                        $article_images = Application::find()->where(['id' => Yii::$app->request->get('id')])->with('image')->asArray()->all();
 
-                        foreach ($article_images as $image){
-                            foreach($image['image'] as $image_url){
-                                if(substr($image_url['image_url'] , 0 ,3) == 'CER'){
-                                    array_push($imageArray , $image_url['image_url']);
+                        foreach ($article_images as $image) {
+                            foreach ($image['image'] as $image_url) {
+                                if (substr($image_url['image_url'], 0, 3) == 'CER') {
+                                    array_push($imageArray, $image_url['image_url']);
                                 }
 
                             }
@@ -420,12 +449,12 @@ class ApplicationController extends Controller
 
                     case 'complete_intelligence' :
                         $imageArray = [];
-                        $article_images =  Application::find()->where(['id'=>Yii::$app->request->get('id')])->with('image')->asArray()->all();
+                        $article_images = Application::find()->where(['id' => Yii::$app->request->get('id')])->with('image')->asArray()->all();
 
-                        foreach ($article_images as $image){
-                            foreach($image['image'] as $image_url){
-                                if(substr($image_url['image_url'] , 0 ,3) == 'COM'){
-                                    array_push($imageArray , $image_url['image_url']);
+                        foreach ($article_images as $image) {
+                            foreach ($image['image'] as $image_url) {
+                                if (substr($image_url['image_url'], 0, 3) == 'COM') {
+                                    array_push($imageArray, $image_url['image_url']);
                                 }
 
                             }

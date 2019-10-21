@@ -47,6 +47,7 @@ class Application extends \yii\db\ActiveRecord
     public $application_status;
     public $type_for_total;
     public $impact_factor_type;
+    public $by_role;
 
     /**
      * {@inheritdoc}
@@ -80,9 +81,9 @@ class Application extends \yii\db\ActiveRecord
 //            [[  'ISSN', 'ISBN', 'from_sdu', 'first_auhtor', 'number_of_author'], 'required'],
 //            ['type_of_application' , 'required' ,'message'=>'Необходимо выбрать тип приложения.'],
 //            ['application_edition' , 'required' ,'message'=>'Необходимо заполнить имя приложения.'],
-//            [['phone_number', 'from_sdu', 'first_auhtor', 'number_of_author', 'is_agree', 'created_at', 'updated_at'], 'integer'],
-//            [['name', 'surname', 'patronymic', 'rank', 'email', 'link_for_application', 'type_of_application', 'application_edition', 'ISSN', 'ISBN', 'DOI_link'], 'string', 'max' => 255],
-        [['publication_name', 'application_image' , 'thomson_reuters' , 'skopus' , 'english_france' ,'RKBGM'] , 'safe']
+            [['phone_number', 'from_sdu', 'first_auhtor', 'number_of_author', 'is_agree', 'created_at', 'updated_at'], 'integer'],
+            [['name', 'surname', 'patronymic', 'rank', 'link_for_application', 'type_of_application', 'application_edition', 'ISSN', 'ISBN', 'DOI_link'], 'string', 'max' => 255],
+            [['by_role','status_by_accountant','google_scholar_url', 'research_gate_url', 'academia_url','publishing_house','number_of_page' ,'pages','user_id' , 'status','DOI_link','publication_name', 'application_image', 'thomson_reuters', 'skopus', 'english_france', 'RKBGM'], 'safe']
         ];
     }
 
@@ -104,7 +105,7 @@ class Application extends \yii\db\ActiveRecord
             'application_edition' => 'Серия приложения',
             'ISSN' => 'ISSN',
             'ISBN' => 'ISBN',
-            'from_sdu' => 'Из СДУ ?',
+            'from_sdu' => 'Публикация из университета Сулейман Демирель / Қазақстан Алматы',
             'first_auhtor' => '',
             'number_of_author' => 'Количество авторов.',
             'is_agree' => 'Я подтверждаю отправку данных',
@@ -116,21 +117,28 @@ class Application extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getAuthor(){
-        return $this->hasMany(Author::className() , ['application_id' => 'id']);
+    public function getAuthor()
+    {
+        return $this->hasMany(Author::className(), ['application_id' => 'id']);
     }
-    public function getImage(){
-        return $this->hasMany(ApplicationImage::className() , ['application_id' => 'id']);
+
+    public function getImage()
+    {
+        return $this->hasMany(ApplicationImage::className(), ['application_id' => 'id']);
     }
-    public function getUser(){
-        return $this->hasOne(User::className() , ['id' => 'user_id']);
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
-    public static function getImages($id){
+
+    public static function getImages($id)
+    {
 //        return Application::find()->innerJoin('application_image' , 'application_image.application_id = application.id')->where(['application_image.application_id' => $id])->groupBy('application.id')->count();
         return (new \yii\db\Query())
             ->select('application_image.image_url AS imageUrl ')
             ->from('application')
-            ->innerJoin('application_image' , 'application.id = application_image.application_id')
+            ->innerJoin('application_image', 'application.id = application_image.application_id')
             ->where('application_image.application_id  = :id')->params([':id' => $id])
             ->all();
     }

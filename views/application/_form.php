@@ -14,84 +14,89 @@ use limion\jqueryfileupload\JQueryFileUpload;
 <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
 
 <div class="application-form">
-
-
     <?php $form = ActiveForm::begin(); ?>
-
-
-
     <div class="container">
-
         <section class="just_section  row">
             <div class="col-sm-2">
-
                 <div class="card">
-                    <?= Html::img('@web/images/no-images.png' , ['style'=>'width:100%;' , 'alt' => 'Avatar']); ?>
+                    <?= Html::img('@web/images/no-images.png', ['style' => 'width:100%;', 'alt' => 'Avatar']); ?>
                     <div class=" card-container">
-                        <h4 style="font-family: 'Poppins', sans-serif;"><b><?= \app\models\User::findOne(['id' => Yii::$app->user->getId()])->first_name;?></b></h4>
-                        <span style="font-weight: bold;">Фамилия</span> <p style="font-family: 'Poppins', sans-serif;"><?= \app\models\User::findOne(['id' => Yii::$app->user->getId()])->last_name;?></p>
-                        <span style="font-weight: bold;">Отчество</span><p style="font-family: 'Poppins', sans-serif;"><?= \app\models\User::findOne(['id' => Yii::$app->user->getId()])->patronymic;?></p>
-<!--                        <span style="font-weight: bold;">Эл-почта</span><p class="this_p" style="overflow-x: auto; font-family: 'Poppins', sans-serif;">--><?//= \app\models\User::findOne(['id' => Yii::$app->user->getId()])->email;?><!--</p>-->
-                        <span style="font-weight: bold;">Должность</span><p class="this_p" style="overflow-x: auto; font-family: 'Poppins', sans-serif;"><?= \app\models\User::findOne(['id' => Yii::$app->user->getId()])->responsibility;?></p>
+                        <h4 style="font-family: 'Poppins', sans-serif;">
+                            <b><?= \app\models\User::findOne(['id' => Yii::$app->user->getId()])->first_name; ?></b>
+                        </h4>
+                        <span style="font-weight: bold;">Фамилия</span>
+                        <p style="font-family: 'Poppins', sans-serif;"><?= \app\models\User::findOne(['id' => Yii::$app->user->getId()])->last_name; ?></p>
+                        <span style="font-weight: bold;">Отчество</span>
+                        <p style="font-family: 'Poppins', sans-serif;"><?= \app\models\User::findOne(['id' => Yii::$app->user->getId()])->patronymic; ?></p>
+                        <!--                        <span style="font-weight: bold;">Эл-почта</span><p class="this_p" style="overflow-x: auto; font-family: 'Poppins', sans-serif;">-->
+                        <? //= \app\models\User::findOne(['id' => Yii::$app->user->getId()])->email;?><!--</p>-->
+                        <span style="font-weight: bold;">Должность</span>
+                        <p class="this_p"
+                           style="overflow-x: auto; font-family: 'Poppins', sans-serif;"><?= \app\models\User::findOne(['id' => Yii::$app->user->getId()])->responsibility; ?></p>
                     </div>
                 </div>
             </div>
             <div class="col-sm-10">
                 <div class="col-sm-9 text-left">
-                    <h3 style="font-weight: bold; color:deepskyblue; font-family: 'Poppins', sans-serif;">Приложения для оплаты гонорара.</h3>
-                    <h5 style="font-style: italic; font-family: 'Poppins', sans-serif; color:red;" class="alert alert-danger">Необходимо писать только те проекты которые были подтверждены через СДУ. </h5>
+                    <h3 style="font-weight: bold; color:deepskyblue; font-family: 'Poppins', sans-serif;">Приложения для
+                        оплаты гонорара.</h3>
+                    <h5 style="font-style: italic; font-family: 'Poppins', sans-serif; color:red;"
+                        class="alert alert-danger">Необходимо писать только те проекты которые были подтверждены через
+                        СДУ. </h5>
                 </div>
                 <div class="col-sm-3">
                     <div class="col-sm-12">
-                        <h5 style="font-weight: bold; font-family: 'Poppins', sans-serif; font-size: 1.8rem; " class="text-left">Приложения  <span> &#35; 123 </span></h5>
-                            <label for="date" style="float:left; font-family: 'Poppins', sans-serif; color: gray; ">День сдачи: </label>
-                            <input class="beauty_input" name='date' type="text" disabled value="<?php
-                            date_default_timezone_set('kazakhstan/Almaty');
-                            echo $date = date('m/d/Y', time()); ?>">
+                        <h5 style="font-weight: bold; font-family: 'Poppins', sans-serif; font-size: 1.8rem; "
+                            class="text-left">Приложения <span> &#35;<?= \app\models\Application::find()->count()+1; ?> </span></h5>
+                        <label for="date" style="float:left; font-family: 'Poppins', sans-serif; color: gray; ">День
+                            сдачи: </label>
+                        <input class="beauty_input" name='date' type="text" disabled value="<?php
+                        date_default_timezone_set('kazakhstan/Almaty');
+                        echo $date = date('m/d/Y', time()); ?>">
                     </div>
                 </div>
                 <div class="row-no-gutters col-sm-12" style="height: auto; padding: 30px 20px;">
                     <div class="col-sm-12">
                         <div class="col-sm-6">
-                            <?= $form->field($model, 'rank')->textInput(['style' => 'width:90%;' , 'value' => \app\models\User::findOne(['id' => Yii::$app->user->getId()])->rank])->label('Департамент. ' ,['class' => 'label-class-left'] )?>
+                            <?= $form->field($model, 'rank')->textInput(['style' => 'width:90%;', 'value' => \app\models\User::findOne(['id' => Yii::$app->user->getId()])->rank])->label('Департамент. ', ['class' => 'label-class-left']) ?>
                         </div>
                         <div class="col-sm-6 text-left">
-                            <?= $form->field($model, 'phone_number')->textInput(['style' => 'width:90%;'])->label('Тел. номер.',['class' => 'label-class-left'])?>
+                            <?= $form->field($model, 'phone_number')->textInput(['style' => 'width:90%;'])->label('Тел. номер.', ['class' => 'label-class-left']) ?>
                         </div>
                     </div>
-
                     <div style="margin-top: 1rem;" class="row-no-gutters  col-sm-12">
                         <div class="col-sm-4">
-                            <?= $form->field($model, 'google_scholar_Url')->textInput(['style' => 'width:90%;'])->label('Google Scholar URL',['class' => 'label-class-left'])?>
+                            <?= $form->field($model, 'google_scholar_Url')->textInput(['style' => 'width:90%;'])->label('Google Scholar URL', ['class' => 'label-class-left']) ?>
                         </div>
 
                         <div class="col-sm-4">
-                            <?= $form->field($model, 'research_gate_Url')->textInput(['style' => 'width:90%;'])->label('Research gate Url',['class' => 'label-class-left'])?>
+                            <?= $form->field($model, 'research_gate_Url')->textInput(['style' => 'width:90%;'])->label('Research gate Url', ['class' => 'label-class-left']) ?>
                         </div>
 
                         <div class="col-sm-4">
-                            <?= $form->field($model, 'academia_Url')->textInput(['style' => 'width:90%;'])->label('Academia URL',['class' => 'label-class-left'])?>
+                            <?= $form->field($model, 'academia_Url')->textInput(['style' => 'width:90%;'])->label('Academia URL', ['class' => 'label-class-left']) ?>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-sm-12 row-no-gutters for-checkbox-css" style="margin-top: -2rem;" >
+                <div class="col-sm-12 row-no-gutters for-checkbox-css" style="margin-top: -2rem;">
                     <div class="col-sm-12 text-left">
-                        <?= $form->field($model , 'type_of_application') ->radioList(
-                                [
-                                        '1' => 'Статья',
-                                        '2' => 'Книга',
-                                        '3' => 'Интервью',
-                                        '4' => 'Петент',
-                                        '5' => 'Обьекты авторских прав',
+                        <?= $form->field($model, 'type_of_application')->radioList(
+                            [
+                                '1' => 'Статья',
+                                '2' => 'Книга',
+                                '3' => 'Интервью',
+                                '4' => 'Петент',
+                                '5' => 'Обьекты авторских прав',
+                            ],
+                            [
+                                'separator' => '&nbsp; &nbsp; &nbsp; ',
+                                'itemOptions' => [
+//                                    'class' => 'radionButton',
                                 ],
-                                [
-                                        'separator' => '&nbsp; &nbsp; &nbsp; ',
-                                        'itemOptions' => [
-                                                'class' => 'radionButton',
-                                        ],
-                                ]
-                        )  ?>
+                                'class' => 'radioButton',
+                            ]
+                        ) ?>
                     </div>
 
 
@@ -100,7 +105,7 @@ use limion\jqueryfileupload\JQueryFileUpload;
 
                 <div class="col-sm-12 ">
                     <?= $form->field($model, 'publication_name')->textInput(['rows' => 2])
-                        ->label('Имя публикаций или книги.',['class' => 'label-class-left publication'])
+                        ->label('Имя публикаций или книги.', ['class' => 'label-class-left publication'])
 
 
                     ?>
@@ -109,15 +114,15 @@ use limion\jqueryfileupload\JQueryFileUpload;
                 <div class="col-sm-12">
                     <div class="row col-sm-12" style="font-size: 1.8rem;">
                         <?=
-                            $form->field($model, 'authors')->widget(MultipleInput::className(), [
-                                'max'               => 6,
-                                'min'               => 1, // should be at least 1 rows
-                                'allowEmptyList'    => true,
-                                'enableGuessTitle'  => false,
-                                'addButtonPosition' => MultipleInput::POS_ROW,
+                        $form->field($model, 'authors')->widget(MultipleInput::className(), [
+                            'max' => 6,
+                            'min' => 1, // should be at least 1 rows
+                            'allowEmptyList' => true,
+                            'enableGuessTitle' => false,
+                            'addButtonPosition' => MultipleInput::POS_ROW,
 
-                            ])
-                                ->label('Авторы:');
+                        ])
+                            ->label('Авторы (за исключением себя):');
                         ?>
 
 
@@ -125,29 +130,29 @@ use limion\jqueryfileupload\JQueryFileUpload;
                 </div>
 
                 <div class="col-sm-12 " style="margin-top: 1.5rem;">
-                    <?= $form->field($model, 'publishing_house')->textInput()->label('Издательство.',['class' => 'label-class-left']) ?>
+                    <?= $form->field($model, 'publishing_house')->textInput()->label('Издательство.', ['class' => 'label-class-left']) ?>
                 </div>
 
-                <div class="col-sm-12 row" >
+                <div class="col-sm-12 row">
                     <div class="col-sm-2">
-                        <?= $form->field($model, 'number')->textInput()->label('&#8470;',['class' => 'label-class-left']) ?>
+                        <?= $form->field($model, 'number')->textInput()->label('&#8470;', ['class' => 'label-class-left']) ?>
                     </div>
                     <div class="col-sm-2 ISSN">
-                        <?= $form->field($model, 'ISSN')->textInput()->label('ISSN:',['class' => 'label-class-left']) ?>
+                        <?= $form->field($model, 'ISSN')->textInput()->label('ISSN:', ['class' => 'label-class-left']) ?>
                     </div>
                     <div class="col-sm-2 ISBN hidden">
-                        <?= $form->field($model, 'ISBN')->textInput()->label('ISBN:',['class' => 'label-class-left']) ?>
+                        <?= $form->field($model, 'ISBN')->textInput()->label('ISBN:', ['class' => 'label-class-left']) ?>
                     </div>
                     <div class="col-sm-2">
-                        <?= $form->field($model, 'all_page')->textInput()->label('Колво стр: ',['class' => 'label-class-left']) ?>
+                        <?= $form->field($model, 'all_page')->textInput()->label('Колво стр: ', ['class' => 'label-class-left']) ?>
                     </div>
                     <div class="col-sm-3 hide-interval">
-                        <?= $form->field($model, 'pages')->textInput()->label('Интервал страниц: ',['class' => 'label-class-left']) ?>
+                        <?= $form->field($model, 'pages')->textInput()->label('Интервал страниц: ', ['class' => 'label-class-left']) ?>
                     </div>
                 </div>
 
-                <div class="col-sm-12"  style="margin-top: 1.5rem;font-size: 1.8rem;">
-                    <?= $form->field($model , 'impact_factor_type')->dropDownList([
+                <div class="col-sm-12" style="margin-top: 1.5rem;font-size: 1.8rem;">
+                    <?= $form->field($model, 'impact_factor_type')->dropDownList([
                         1 => '0 - 0,49',
                         2 => '0,5 - 1,49',
                         3 => '1,5 - 2,49',
@@ -155,25 +160,25 @@ use limion\jqueryfileupload\JQueryFileUpload;
                     ])->label('Выберите импакт фактор') ?>
                 </div>
 
-                <div class="col-sm-12"  style="margin-top: 1.5rem; font-size: 1.8rem;">
-                    <?= $form->field($model , 'type_for_total')->checkboxList(
-                            [
-                                    1 => 'Был опубликован в инормационной базе Томсан Рейтер',
-                                    2 => 'Был опубликован в базе Скопус',
-                                    3 => 'Был рецензирован в журналах Английского , Немецкого и Французкого языка',
-                                    4 => 'Был опубликован в КР БГМ',
-                            ],
-                            [
-                                'separator' => '<br>',
-                            ]
+                <div class="col-sm-12" style="margin-top: 1.5rem; font-size: 1.8rem;">
+                    <?= $form->field($model, 'type_for_total')->checkboxList(
+                        [
+                            1 => 'Был опубликован в инормационной базе Томсан Рейтер',
+                            2 => 'Был опубликован в базе Скопус',
+                            3 => 'Был рецензирован в журналах Английского , Немецкого и Французкого языка',
+                            4 => 'Был опубликован в КР БГМ',
+                        ],
+                        [
+                            'separator' => '<br>',
+                        ]
                     )->label('Статус публикаций для подчета гонорар'); ?>
                 </div>
 
                 <div class="col-sm-12">
-                    <?= $form->field($model, 'DOI_link')->textInput()->label('Ссылка на DOI: ',['class' => 'label-class-left']) ?>
+                    <?= $form->field($model, 'DOI_link')->textInput()->label('Ссылка на DOI: ', ['class' => 'label-class-left']) ?>
                 </div>
                 <div class="col-sm-12 text-left" style="font-size: 1.8rem;">
-                    <?= $form->field($model , 'type_of_application') ->radioList(
+                    <?= $form->field($model, 'type_of_application')->radioList(
                         [
                             '1' => 'Прикрепите статью.',
                             '2' => 'Прикрепите сертификаты.',
@@ -182,10 +187,10 @@ use limion\jqueryfileupload\JQueryFileUpload;
                         [
                             'separator' => '&nbsp; &nbsp; &nbsp; ',
                             'itemOptions' => [
-                                'class' => 'radionButton',
+                                'class' => 'radioButton',
                             ],
                         ]
-                    )  ?>
+                    ) ?>
                 </div>
 
                 <div class="col-sm-12 hidden" id="fileupload" style="margin-top: 4rem;">
@@ -202,14 +207,12 @@ use limion\jqueryfileupload\JQueryFileUpload;
                     </div>
 
 
-
-
                     <div class="col-sm-12 public_file">
                         <?= FileUploadUI::widget([
                             'model' => $model,
                             'attribute' => 'image_pub_f',
                             'options' => ['style' => 'margin-top:3rem;'],
-                            'url' => ['application/image-upload' , 'type' => 'PUB_F'],
+                            'url' => ['application/image-upload', 'type' => 'PUB_F'],
                             'gallery' => false,
                             'fieldOptions' => [
                                 'accept' => 'image/*'
@@ -237,7 +240,7 @@ use limion\jqueryfileupload\JQueryFileUpload;
                             'model' => $model,
                             'attribute' => 'image_cer_f',
                             'options' => ['style' => 'margin-top:3rem;'],
-                            'url' => ['application/image-upload' , 'type' => 'CER_F'],
+                            'url' => ['application/image-upload', 'type' => 'CER_F'],
                             'gallery' => false,
                             'fieldOptions' => [
                                 'accept' => 'image/*'
@@ -264,7 +267,7 @@ use limion\jqueryfileupload\JQueryFileUpload;
                             'model' => $model,
                             'attribute' => 'image_com_f',
                             'options' => ['style' => 'margin-top:3rem;'],
-                            'url' => ['application/image-upload' , 'type' => 'COM_F'],
+                            'url' => ['application/image-upload', 'type' => 'COM_F'],
                             'gallery' => false,
                             'fieldOptions' => [
                                 'accept' => 'image/*'
@@ -288,16 +291,18 @@ use limion\jqueryfileupload\JQueryFileUpload;
                     </div>
 
 
-
                 </div>
 
                 <div class="col-sm-12 row" style="margin-top: 2rem;">
                     <div class="col-sm-6" style="font-size: 1.8rem;">
-                        <?= $form->field($model , 'is_agree')->checkbox(); ?>
+                        <?= $form->field($model, 'is_agree')->checkbox(); ?>
                     </div>
                 </div>
+                <div class="col-sm-12" style="font-size: 1.8rem;">
+                    <?= $form->field($model, 'from_sdu')->checkbox(); ?>
+                </div>
             </div>
-            <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success' ,'style'=>'float:right;margin-right:2.5rem;padding:10px 20px; margin-top:4rem;']) ?>
+            <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success', 'style' => 'float:right;margin-right:2.5rem;padding:10px 20px; margin-top:4rem;']) ?>
         </section>
     </div>
     <?php ActiveForm::end(); ?>
@@ -369,6 +374,9 @@ $this->registerCss($css);
 
 $js = <<<JS
 
+            $('.radioButton > label:not(:nth-child(1)):not(:nth-child(2)) > input').prop('disabled' , 'true;');
+
+
     $('#application-type_of_application > label:nth-child(1) > input').click(function(){
       $('.for-hide').removeClass('hidden');
       $('.hide-1').removeClass('hidden');
@@ -431,6 +439,16 @@ $js = <<<JS
         $('.compl_file').removeClass('hidden');
         
     });
+      
+     
+    $('.radioButton > label:nth-child(1) > input').bind('click' , function(){
+        $('.hide-interval').removeClass('hidden');
+    });
+     $('.radioButton > label:nth-child(2) > input').bind('click' , function(){
+        $('.hide-interval').addClass('hidden');
+    });
+     
+    
 JS;
 
 $this->registerJs($js);

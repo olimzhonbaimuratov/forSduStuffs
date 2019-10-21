@@ -8,17 +8,18 @@ use yii\helpers\Url;
 /* @var $searchModel app\models\ApplicationSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Applications';
+$this->title = 'Приложение';
 $this->params['breadcrumbs'][] = $this->title;
+echo $notify;
 ?>
 <div class="application-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-<!--        --><?php //if (Yii::$app->user->can('stuff') || Yii::$app->user->can('admin')): ?>
-<!--            --><?//= Html::a('Создать приложения', ['create'], ['class' => 'btn btn-success']) ?>
-<!--        --><?php //endif; ?>
+        <!--        --><?php //if (Yii::$app->user->can('stuff') || Yii::$app->user->can('admin')): ?>
+        <!--            --><? //= Html::a('Создать приложения', ['create'], ['class' => 'btn btn-success']) ?>
+        <!--        --><?php //endif; ?>
 
     </p>
 
@@ -81,7 +82,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function ($model) {
 
                     $result = \app\models\Application::getImages($model->id);
-                    return  '<a  class="btn btn-primary">'.count($result).'</a>';
+                    return '<a  class="btn btn-primary">' . count($result) . '</a>';
 //                        return '<img src="/uploads/application_files/PUB_F15691716875d87a8e7005fe8.17041853.png"  width="100" />';
 //                        return Html::img(Yii::getAlias('@web').'/uploads/application_files/'.'CER_F15703856795d9a2f0f4d22c5.48151976.png') ;
 
@@ -114,15 +115,37 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => 'Статус приложение',
                 'format' => 'raw',
-                'value' => function($model){
-                    if($model->status === null){
-                       return  '<div class="btn btn-primary ">В ожидание</div>';
+                'value' => function ($model) {
+                    $totalHtml = '';
+                    $totalHtml .= '<table>';
+                    if ($model->status === null) {
+                        $totalHtml .= '<tr>';
+                        $totalHtml .= '<td>Подтверждено департаментом наук:</td>';
+                        $totalHtml .= '<td><div class="btn btn-primary ">В ожидание</div></td>';
+                        $totalHtml .= '</tr>';
                     }
-                    else{
-                        return $model->status == '1' ?  '<div class="btn btn-success ">Подтвержден</div>' : '<div class="btn btn-danger ">Отказано</div>';
+                    if ($model->status_by_accountant === null) {
+                        $totalHtml .= '<tr>';
+                        $totalHtml .= '<td>Подтверждено бухгалтерией:</td>';
+                        $totalHtml .= '<td><div class="btn btn-primary ">В ожидание</div></td>';
+                        $totalHtml .= '</tr>';
+                    } else {
+                        $totalHtml .= '<tr>';
+                        $totalHtml .= '<td>Подтверждено департаментом наук:</td>';
+                        $totalHtml .= $model->status == '1' ? '<td><div class="btn btn-success ">Подтвержден</div></td>' : '<td><div class="btn btn-danger ">Отказано</div></td>';
+                        $totalHtml .= '</tr>';
+                        $totalHtml .= '<tr>';
+                        $totalHtml .= '<td>Подтверждено бухгалтерией:</td>';
+                        $totalHtml .= $model->status_by_accountant == '1' ? '<td><div class="btn btn-success ">Подтвержден</div></td>' : '<td><div class="btn btn-danger ">Отказано</div></td>';
+                        $totalHtml .= '</tr>';
+
                     }
 
-                }
+                    $totalHtml .= '</table>';
+                    return $totalHtml;
+
+
+                },
 
             ],
 
@@ -130,9 +153,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{myButton} {delete} {update}',
                 'buttons' => [
-                        'myButton' => function($url , $model , $key){
-                            return Html::a('<span class="glyphicon glyphicon-eye-open"></span>' , Url::toRoute(['/application/show-application/' , 'id' => $model->id]));
-                        }
+                    'myButton' => function ($url, $model, $key) {
+                        return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', Url::toRoute(['/application/show-application/', 'id' => $model->id]));
+                    }
                 ],
             ],
         ],
@@ -155,6 +178,20 @@ $css = <<<CSS
 
 .this-container {
   padding: 2px 16px;
+}
+table{
+    border: 1px solid black;
+}
+table tr{
+  border: 1px solid black;
+  padding: 1rem;
+}
+table tr td{
+border: 1px solid black;
+padding: 1rem;
+}
+#w0{
+overflow-x: auto;
 }
 CSS;
 

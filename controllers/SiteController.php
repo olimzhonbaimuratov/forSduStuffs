@@ -65,6 +65,9 @@ class SiteController extends Controller
         if(Yii::$app->user->can('stuff')){
             return $this->redirect('/application/create');
         }
+        if(Yii::$app->user->can('admin')){
+            return $this->redirect('/application/index');
+        }
         return $this->render('index');
     }
 
