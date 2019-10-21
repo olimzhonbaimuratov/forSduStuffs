@@ -15,7 +15,7 @@ use limion\jqueryfileupload\JQueryFileUpload;
 
 <div class="application-form">
     <?php $form = ActiveForm::begin(); ?>
-    <div class="container">
+    <div class="container" style="height: auto;">
         <section class="just_section  row">
             <div class="col-sm-2">
                 <div class="card">
