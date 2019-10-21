@@ -325,7 +325,7 @@ height: auto;
     }
     .just_section > div:nth-child(2){
         /*background-color: #0c5460;*/
-        height: 100%;
+        height: auto;
     }
     .ul-here{
         text-decoration: none;
