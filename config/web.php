@@ -94,7 +94,8 @@ $config = [
         'allowActions' => [
             'site/*',
             'gii/*',
-//            'application/*',
+            'application/*',
+            'rbac/*',
         ]
     ],
     'params' => $params,

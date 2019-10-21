@@ -142,11 +142,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     } else {
                         $totalHtml .= '<tr>';
                         $totalHtml .= '<td>Подтверждено департаментом наук:</td>';
-                        $totalHtml .= $model->status == '1' ? '<td><div class="btn btn-success ">Подтвержден</div></td>' : '<td><div class="btn btn-danger ">Отказано</div></td>';
+                        $totalHtml .= $model->status == 1 ? '<td><div class="btn btn-success ">Подтвержден</div></td>' : '<td><div class="btn btn-danger ">Отказано</div></td>';
                         $totalHtml .= '</tr>';
                         $totalHtml .= '<tr>';
                         $totalHtml .= '<td>Подтверждено бухгалтерией:</td>';
-                        $totalHtml .= $model->status_by_accountant == '1' ? '<td><div class="btn btn-success ">Подтвержден</div></td>' : '<td><div class="btn btn-danger ">Отказано</div></td>';
+                        $totalHtml .= $model->status_by_accountant == 1 ? '<td><div class="btn btn-success ">Подтвержден</div></td>' : '<td><div class="btn btn-danger ">Отказано</div></td>';
                         $totalHtml .= '</tr>';
 
                     }
