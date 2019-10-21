@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <td style="font-weight: bold;">Авторы</td>
                                 <td>
                                     <?php $work = User::findOne(['id' => $model->user_id]); ?>
-                                    <?= '1) ' . '<span style="color:red">' . (isset($work) ? $work->first_name: null ) . ' ' . \app\models\User::findOne(['id' => $model->user_id])->last_name . '</span>' . '<br>' ?>
+                                    <?= '1) ' . '<span style="color:red">' . (isset($work) ? ($work->first_name . ' ' . $work->last_name) : null ) . '</span>' . '<br>' ?>
                                     <?php $counter = 2; ?>
                                     <?php foreach ($model->author as $author): ?>
                                         <?= $counter . ') ' . $author->full_name . '<br>' ?>
