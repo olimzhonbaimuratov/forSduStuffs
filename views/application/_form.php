@@ -310,6 +310,9 @@ use limion\jqueryfileupload\JQueryFileUpload;
 
 <?php
 $css = <<<CSS
+#w0{
+height: auto;
+}
     .just_section{
         /*background: #fc0; !* Цвет фона *!*/
         box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Параметры тени */
